@@ -2,4 +2,6 @@ docker build -t localhost:5000/haptoxy .
 docker push localhost:5000/haptoxy
 docker run -it --rm --name haproxy-syntax-check localhost:5000/haptoxy haproxy -c -f /usr/local/etc/haproxy/haproxy.cfg
 
-docker run -d --name haproxy --restart=always -p X.X.X.X:80:80 -p 9600:9600 localhost:5000/haptoxy
+docker service create --name haproxy -p 80:80 -p 2200:2200 -p 9600:9600 localhost:5000/haptoxy
+
+docker run -d --name haproxy --restart=always -p 80:80 -p 2200:2200 -p 9600:9600 localhost:5000/haptoxy
